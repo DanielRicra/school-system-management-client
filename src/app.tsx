@@ -1,10 +1,19 @@
-import "./App.css";
+import { RouterProvider } from "@tanstack/react-router";
+
+import { ThemeProvider } from "./components/providers/theme-provider";
+import { router } from "./router";
+import "./app.css";
+
+function InnerApp() {
+  const auth = { firstName: "Daniel", id: "123654-456" };
+  return <RouterProvider router={router} context={{ auth }} />;
+}
 
 function App() {
   return (
-    <>
-      <h1>Hi School system management</h1>
-    </>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <InnerApp />
+    </ThemeProvider>
   );
 }
 
