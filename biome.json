@@ -37,6 +37,6 @@
   },
   "files": {
     "include": ["src/"],
-    "ignore": ["dist/", "node_modules/"]
+    "ignore": ["dist/", "node_modules/", "src/routeTree.gen.ts"]
   }
 }
