@@ -18,7 +18,10 @@ import { Route as AdminImport } from './routes/_admin'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
-const AdminAdminLazyImport = createFileRoute('/_admin/admin')()
+const AdminAdminIndexLazyImport = createFileRoute('/_admin/admin/')()
+const AdminAdminStudentsIndexLazyImport = createFileRoute(
+  '/_admin/admin/students/',
+)()
 
 // Create/Update Routes
 
@@ -32,10 +35,20 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const AdminAdminLazyRoute = AdminAdminLazyImport.update({
-  path: '/admin',
+const AdminAdminIndexLazyRoute = AdminAdminIndexLazyImport.update({
+  path: '/admin/',
   getParentRoute: () => AdminRoute,
-} as any).lazy(() => import('./routes/_admin/admin.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import('./routes/_admin/admin/index.lazy').then((d) => d.Route),
+)
+
+const AdminAdminStudentsIndexLazyRoute =
+  AdminAdminStudentsIndexLazyImport.update({
+    path: '/admin/students/',
+    getParentRoute: () => AdminRoute,
+  } as any).lazy(() =>
+    import('./routes/_admin/admin/students/index.lazy').then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -49,8 +62,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImport
       parentRoute: typeof rootRoute
     }
-    '/_admin/admin': {
-      preLoaderRoute: typeof AdminAdminLazyImport
+    '/_admin/admin/': {
+      preLoaderRoute: typeof AdminAdminIndexLazyImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/students/': {
+      preLoaderRoute: typeof AdminAdminStudentsIndexLazyImport
       parentRoute: typeof AdminImport
     }
   }
@@ -60,7 +77,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
-  AdminRoute.addChildren([AdminAdminLazyRoute]),
+  AdminRoute.addChildren([
+    AdminAdminIndexLazyRoute,
+    AdminAdminStudentsIndexLazyRoute,
+  ]),
 ])
 
 /* prettier-ignore-end */
