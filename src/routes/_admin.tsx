@@ -1,13 +1,14 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Sidebar } from "./_admin/-components/sidebar";
 
 export const Route = createFileRoute("/_admin")({
-  component: LayoutComponent,
+  component: AdminLayout,
 });
 
-function LayoutComponent() {
+function AdminLayout() {
   return (
-    <div className="w-full min-h-svh py-8 px-6">
-      <nav>Links will be here!!</nav>
+    <div className="flex h-dvh justify-start items-start">
+      <Sidebar />
       <Outlet />
     </div>
   );

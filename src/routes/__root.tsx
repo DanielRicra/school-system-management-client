@@ -1,8 +1,4 @@
-import {
-  createRootRouteWithContext,
-  Link,
-  Outlet,
-} from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 
 const TanStackRouterDevtools =
@@ -20,27 +16,11 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <>
-      <NavBar />
+    <div>
       <Outlet />
       <Suspense>
         <TanStackRouterDevtools />
       </Suspense>
-    </>
+    </div>
   ),
 });
-
-function NavBar() {
-  return (
-    <header>
-      <nav className="py-4 px-6 flex gap-4 w-full border-b border-green-500">
-        <Link to="/" className="[&.active]:font-bold hover:text-gray-400">
-          Home
-        </Link>
-        <Link to="/admin" className="[&.active]:font-bold">
-          Admin
-        </Link>
-      </nav>
-    </header>
-  );
-}
