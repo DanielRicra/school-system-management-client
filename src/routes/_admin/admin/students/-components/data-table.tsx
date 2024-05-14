@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import { DotsHorizontalIcon, CaretSortIcon } from "@radix-ui/react-icons";
+import { Link } from "@tanstack/react-router";
 
 type Student = {
   id: string;
@@ -28,11 +31,25 @@ type Student = {
   userCode: string;
   enrollmentStatus: string;
   createdAt: string;
+  updatedAt: string;
 };
 
 interface StudentsTableProps {
   data: Student[];
 }
+
+const columns = [
+  { header: "Grade Level", ordering: "grade_level" },
+  { header: "Classroom ID", ordering: "classroom_id" },
+  { header: "User ID", ordering: null },
+  { header: "First Name", ordering: null },
+  { header: "Surname", ordering: null },
+  { header: "User Code", ordering: null },
+  { header: "Enrollment Status", ordering: "enrollment_status" },
+  { header: "Created At", ordering: "created_at" },
+  { header: "Updated At", ordering: "updated_at" },
+  { header: "Actions", ordering: null },
+];
 
 export function StudentsTable({ data }: StudentsTableProps) {
   return (
@@ -40,31 +57,61 @@ export function StudentsTable({ data }: StudentsTableProps) {
       <TableCaption>A list of all the students.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Grade Level</TableHead>
-          <TableHead>Classroom ID</TableHead>
-          <TableHead>User ID</TableHead>
-          <TableHead>First Name</TableHead>
-          <TableHead>Surname</TableHead>
-          <TableHead>User Code</TableHead>
-          <TableHead>Enrollment Status</TableHead>
-          <TableHead>Created At</TableHead>
-          <TableHead>Actions</TableHead>
+          {columns.map(({ ordering, header }) => {
+            if (!ordering) {
+              return (
+                <TableHead className="text-nowrap" key={header}>
+                  {header}
+                </TableHead>
+              );
+            }
+            return (
+              <TableHead key={header}>
+                <Link
+                  search={(prev) => ({
+                    ordering:
+                      "ordering" in prev && prev.ordering === ordering
+                        ? `-${ordering}`
+                        : ordering,
+                  })}
+                  className={buttonVariants({ variant: "ghost" })}
+                >
+                  {header}
+                  <CaretSortIcon className="ml-2 h-4 w-4" />
+                </Link>
+              </TableHead>
+            );
+          })}
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.length > 0 ? (
           data.map((student) => (
-            <TableRow key={student.id}>
+            <TableRow key={student.id} className="*:px-2">
               <TableCell>{student.gradeLevel}</TableCell>
               <TableCell>{student.classroomId}</TableCell>
-              <TableCell className="max-w-[100px] text-nowrap truncate">
-                {student.userId}
+              <TableCell>
+                <Link
+                  to="/admin/users/$userId"
+                  params={{ userId: student.userId }}
+                  className={cn(
+                    buttonVariants({ variant: "link" }),
+                    "p-0 text-secondary-foreground"
+                  )}
+                >
+                  <span className="max-w-[80px] text-nowrap truncate">
+                    {student.userId}
+                  </span>
+                </Link>
               </TableCell>
               <TableCell>{student.firstName}</TableCell>
               <TableCell>{student.surname}</TableCell>
               <TableCell>{student.userCode}</TableCell>
-              <TableCell>{student.enrollmentStatus}</TableCell>
+              <TableCell className="text-center">
+                <Badge variant="secondary">{student.enrollmentStatus}</Badge>
+              </TableCell>
               <TableCell>{student.createdAt}</TableCell>
+              <TableCell>{student.updatedAt}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -90,7 +137,7 @@ export function StudentsTable({ data }: StudentsTableProps) {
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={9} className="text-center h-24">
+            <TableCell colSpan={columns.length} className="text-center h-24">
               No results found.
             </TableCell>
           </TableRow>
