@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_admin")({
 
 function AdminLayout() {
   return (
-    <div className="flex h-dvh justify-start items-start">
+    <div className="flex h-dvh justify-start items-start w-dvw overflow-hidden">
       <Sidebar />
       <Outlet />
     </div>
