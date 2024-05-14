@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 export function Sidebar() {
   return (
-    <nav className="py-6 px-3 h-full w-48 border-r border-secondary/40">
-      <ul className="flex flex-col gap-1">
+    <nav className="py-8 px-3 h-full inline-flex min-w-[200px] border-r border-secondary/40">
+      <ul className="flex flex-col gap-1 w-full">
         <Link
           to="/admin"
           className="[&.active]:font-semibold hover:bg-secondary p-2 px-4 rounded-md [&.active]:bg-secondary"
