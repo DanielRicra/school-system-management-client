@@ -14,7 +14,9 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AdminImport } from './routes/_admin'
+import { Route as AdminAdminUsersIndexImport } from './routes/_admin/admin/users/index'
 import { Route as AdminAdminStudentsIndexImport } from './routes/_admin/admin/students/index'
+import { Route as AdminAdminUsersUserIdImport } from './routes/_admin/admin/users/$userId'
 
 // Create Virtual Routes
 
@@ -40,12 +42,22 @@ const AdminAdminIndexLazyRoute = AdminAdminIndexLazyImport.update({
   import('./routes/_admin/admin/index.lazy').then((d) => d.Route),
 )
 
+const AdminAdminUsersIndexRoute = AdminAdminUsersIndexImport.update({
+  path: '/admin/users/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AdminAdminStudentsIndexRoute = AdminAdminStudentsIndexImport.update({
   path: '/admin/students/',
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
   import('./routes/_admin/admin/students/index.lazy').then((d) => d.Route),
 )
+
+const AdminAdminUsersUserIdRoute = AdminAdminUsersUserIdImport.update({
+  path: '/admin/users/$userId',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -63,8 +75,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminIndexLazyImport
       parentRoute: typeof AdminImport
     }
+    '/_admin/admin/users/$userId': {
+      preLoaderRoute: typeof AdminAdminUsersUserIdImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/admin/students/': {
       preLoaderRoute: typeof AdminAdminStudentsIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/users/': {
+      preLoaderRoute: typeof AdminAdminUsersIndexImport
       parentRoute: typeof AdminImport
     }
   }
@@ -76,7 +96,9 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   AdminRoute.addChildren([
     AdminAdminIndexLazyRoute,
+    AdminAdminUsersUserIdRoute,
     AdminAdminStudentsIndexRoute,
+    AdminAdminUsersIndexRoute,
   ]),
 ])
 
