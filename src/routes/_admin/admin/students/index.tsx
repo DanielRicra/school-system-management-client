@@ -3,6 +3,7 @@ import * as v from "valibot";
 
 const productSearchSchema = v.object({
   page: v.fallback(v.optional(v.number([v.minValue(1)])), 1),
+  ordering: v.fallback(v.optional(v.string([])), ""),
 });
 
 export const Route = createFileRoute("/_admin/admin/students/")({
