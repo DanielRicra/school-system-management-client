@@ -37,7 +37,7 @@ export function DataPagination({
         <PaginationItem>
           <Link
             to={pathRoute}
-            search={{ page: active - 1 }}
+            search={(search) => ({ ...search, page: active - 1 })}
             disabled={!canPrev()}
             className={cn(
               buttonVariants({
@@ -64,7 +64,7 @@ export function DataPagination({
             <PaginationItem key={page + Math.random() * 1000}>
               <Link
                 to={pathRoute}
-                search={{ page }}
+                search={(search) => ({ ...search, page })}
                 className={buttonVariants({
                   variant: active === page ? "default" : "outline",
                   size: "icon",
@@ -79,7 +79,7 @@ export function DataPagination({
         <PaginationItem>
           <Link
             to={pathRoute}
-            search={{ page: active + 1 }}
+            search={(search) => ({ ...search, page: active + 1 })}
             disabled={!canNext()}
             className={cn(
               buttonVariants({
