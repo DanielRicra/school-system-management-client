@@ -18,21 +18,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import type { Student } from "@/services/types";
 import { DotsHorizontalIcon, CaretSortIcon } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
-
-type Student = {
-  id: string;
-  gradeLevel: string;
-  classroomId: number;
-  userId: string;
-  firstName: string;
-  surname: string;
-  userCode: string;
-  enrollmentStatus: string;
-  createdAt: string;
-  updatedAt: string;
-};
 
 interface StudentsTableProps {
   data: Student[];
@@ -42,8 +30,8 @@ const columns = [
   { header: "Grade Level", ordering: "grade_level" },
   { header: "Classroom ID", ordering: "classroom_id" },
   { header: "User ID", ordering: null },
-  { header: "First Name", ordering: null },
-  { header: "Surname", ordering: null },
+  { header: "First Name", ordering: "user.first_name" },
+  { header: "Surname", ordering: "user.surname" },
   { header: "User Code", ordering: null },
   { header: "Enrollment Status", ordering: "enrollment_status" },
   { header: "Created At", ordering: "created_at" },
@@ -104,9 +92,9 @@ export function StudentsTable({ data }: StudentsTableProps) {
                   </span>
                 </Link>
               </TableCell>
-              <TableCell>{student.firstName}</TableCell>
-              <TableCell>{student.surname}</TableCell>
-              <TableCell>{student.userCode}</TableCell>
+              <TableCell>{student.user?.firstName ?? "--"}</TableCell>
+              <TableCell>{student.user?.surname ?? "--"}</TableCell>
+              <TableCell>{student.user?.code ?? "--"}</TableCell>
               <TableCell className="text-center">
                 <Badge variant="secondary">{student.enrollmentStatus}</Badge>
               </TableCell>
