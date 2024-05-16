@@ -1,3 +1,7 @@
+import { DotsHorizontalIcon, CaretSortIcon } from "@radix-ui/react-icons";
+import { Link } from "@tanstack/react-router";
+import { format } from "date-fns";
+
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -19,8 +23,6 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { Student } from "@/services/types";
-import { DotsHorizontalIcon, CaretSortIcon } from "@radix-ui/react-icons";
-import { Link } from "@tanstack/react-router";
 
 interface StudentsTableProps {
   data: Student[];
@@ -98,8 +100,12 @@ export function StudentsTable({ data }: StudentsTableProps) {
               <TableCell className="text-center">
                 <Badge variant="secondary">{student.enrollmentStatus}</Badge>
               </TableCell>
-              <TableCell>{student.createdAt}</TableCell>
-              <TableCell>{student.updatedAt}</TableCell>
+              <TableCell>
+                {format(new Date(student.createdAt), "cccccc, PPp")}
+              </TableCell>
+              <TableCell>
+                {format(new Date(student.updatedAt), "cccccc, PPp")}
+              </TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
