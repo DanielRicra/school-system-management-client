@@ -25,8 +25,6 @@ function AdminStudents() {
     query: { page: activePage, ordering },
   });
 
-  console.log(isLoading);
-
   return (
     <ScrollArea className="h-full w-full">
       <main className="flex flex-col gap-4 py-8 items-start container h-full w-full">
