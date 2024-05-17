@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { Student } from "@/services/types";
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 
 interface StudentsTableProps {
   data: Student[];
@@ -47,31 +48,11 @@ export function StudentsTable({ data }: StudentsTableProps) {
       <TableCaption>A list of all the students.</TableCaption>
       <TableHeader>
         <TableRow>
-          {columns.map(({ ordering, header }) => {
-            if (!ordering) {
-              return (
-                <TableHead className="text-nowrap" key={header}>
-                  {header}
-                </TableHead>
-              );
-            }
-            return (
-              <TableHead key={header}>
-                <Link
-                  search={(prev) => ({
-                    ordering:
-                      "ordering" in prev && prev.ordering === ordering
-                        ? `-${ordering}`
-                        : ordering,
-                  })}
-                  className={buttonVariants({ variant: "ghost" })}
-                >
-                  {header}
-                  <CaretSortIcon className="ml-2 h-4 w-4" />
-                </Link>
-              </TableHead>
-            );
-          })}
+          {columns.map(({ ordering, header }) => (
+            <TableHead key={header}>
+              <DataTableColumnHeader ordering={ordering} title={header} />
+            </TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
