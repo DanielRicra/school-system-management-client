@@ -15,14 +15,14 @@ export const Route = createLazyFileRoute("/_admin/admin/students/")({
 });
 
 function AdminStudents() {
-  const { page: activePage = 1, ordering } = Route.useSearch();
+  const { page: activePage = 1, ordering, per_page } = Route.useSearch();
 
   const {
     data: students,
     isLoading,
     error,
   } = useFetchStudents<ListResponse<Student>>({
-    query: { page: activePage, ordering },
+    query: { page: activePage, ordering, per_page },
   });
 
   return (
@@ -62,6 +62,7 @@ function AdminStudents() {
             active={activePage}
             total={students.info.lastPage}
             pathRoute="/admin/students"
+            perPage={per_page}
           />
         ) : null}
       </main>
