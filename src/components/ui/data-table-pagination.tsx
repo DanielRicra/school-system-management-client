@@ -25,7 +25,7 @@ interface DataPaginationProps {
   perPage?: number;
 }
 
-export function DataPagination({
+export function DataTablePagination({
   active,
   total,
   pathRoute,
