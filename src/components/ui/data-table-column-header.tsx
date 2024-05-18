@@ -41,7 +41,7 @@ export function DataTableColumnHeader({
   }, [search, ordering]);
 
   if (!ordering) {
-    return <div className={cn(className)}>{title}</div>;
+    return <div className={cn("text-nowrap", className)}>{title}</div>;
   }
 
   return (
@@ -50,7 +50,6 @@ export function DataTableColumnHeader({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
