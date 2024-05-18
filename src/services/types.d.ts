@@ -10,12 +10,19 @@ export type User = {
   updatedAt: string;
 };
 
+export type GradeLevel = "1st" | "2nd" | "3rd" | "4th" | "5th";
+export type EnrollmentStatus =
+  | "active"
+  | "graduated"
+  | "transferred"
+  | "inactive";
+
 export type Student = {
   id: string;
-  gradeLevel: "1st" | "2nd" | "3rd" | "4th" | "5th";
+  gradeLevel: GradeLevel;
   classroomId: number | null;
   userId: string;
-  enrollmentStatus: "active" | "graduated" | "transferred" | "inactive";
+  enrollmentStatus: EnrollmentStatus;
   createdAt: string;
   updatedAt: string;
   user?: User;
