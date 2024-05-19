@@ -24,6 +24,13 @@ export const enrollmentStatuses = [
   },
 ];
 
+export const enrollmentStatusIcon = {
+  active: <CheckIcon className="w-4 h-4" />,
+  graduated: <CapIcon className="w-4 h-4" />,
+  inactive: <LockClosedIcon className="w-4 h-4" />,
+  transferred: <UpdateIcon className="w-4 h-4" />,
+};
+
 export const gradeLevels = [
   {
     label: "1st",
