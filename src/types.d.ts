@@ -1,1 +1,4 @@
-export type QueryString = Record<string, string | number | undefined>;
+export type QueryString = Record<
+  string,
+  string | number | undefined | string[]
+>;
