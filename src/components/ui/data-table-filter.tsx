@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import type { Column } from "@/hooks/types";
+import type { Column, ColumnFilterValue } from "@/hooks/types";
 
 interface DataTableFilterProps {
   column: Column;
@@ -28,14 +28,30 @@ interface DataTableFilterProps {
     value: string;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
+  navigateOnChangeFilter: (
+    columnName: string,
+    columnFilter?: ColumnFilterValue
+  ) => void;
 }
 
 export function DataTableFilter({
   column,
   title,
   options,
+  navigateOnChangeFilter,
 }: DataTableFilterProps) {
   const selectedValues = new Set(column.getFilterValue() as string[]);
+
+  const handleSelectItem = (isSelected: boolean, value: string) => {
+    if (isSelected) {
+      selectedValues.delete(value);
+    } else {
+      selectedValues.add(value);
+    }
+    const filterValues = Array.from(selectedValues);
+    column.setFilterValue(filterValues.length ? filterValues : undefined);
+    navigateOnChangeFilter(column.columnName, filterValues);
+  };
 
   return (
     <Popover>
@@ -90,17 +106,7 @@ export function DataTableFilter({
                 return (
                   <CommandItem
                     key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value);
-                      } else {
-                        selectedValues.add(option.value);
-                      }
-                      const filterValues = Array.from(selectedValues);
-                      column.setFilterValue(
-                        filterValues.length ? filterValues : undefined
-                      );
-                    }}
+                    onSelect={() => handleSelectItem(isSelected, option.value)}
                   >
                     <div
                       className={cn(
@@ -127,7 +133,10 @@ export function DataTableFilter({
                 <CommandSeparator />
                 <CommandGroup>
                   <CommandItem
-                    onSelect={() => column.setFilterValue(undefined)}
+                    onSelect={() => {
+                      column.setFilterValue(undefined);
+                      navigateOnChangeFilter(column.columnName, undefined);
+                    }}
                     className="justify-center text-center"
                   >
                     Clear filters
