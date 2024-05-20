@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { getRouteApi } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,58 +7,89 @@ import { Input } from "@/components/ui/input";
 import { enrollmentStatuses, gradeLevels } from "../-data/data";
 import { DataTableFilter } from "@/components/ui/data-table-filter";
 import { useFilterTable } from "@/hooks/table";
-import type { ColumnFiltersState } from "@/hooks/types";
-import type { Student } from "@/services/types";
+import type { ColumnFilterValue } from "@/hooks/types";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-type ColumnsIDs = {
+export type StudentsColumnsIDs = {
   first_name: string;
   surname: string;
-} & Pick<Student, "enrollmentStatus" | "gradeLevel">;
+  enrollment_status: string;
+  grade_level: string;
+};
+
+const routeApi = getRouteApi("/_admin/admin/students/");
 
 export function DataTableToolbar() {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const navigate = useNavigate({ from: "/admin/students" });
+  const tableFilter = useFilterTable<StudentsColumnsIDs>();
 
-  const table = useFilterTable<ColumnsIDs>({
-    state: {
-      columnFilters,
-    },
-    onColumnFiltersChange: setColumnFilters,
-  });
+  const isFiltered = tableFilter.getState().columnFilters.length > 0;
 
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const { enrollment_status, grade_level } = routeApi.useSearch();
+
+  const navigateOnChangeFilter = (
+    columnName: string,
+    columnFilter?: ColumnFilterValue
+  ) => {
+    navigate({
+      to: "/admin/students",
+      search: (search) => ({ ...search, page: 1, [columnName]: columnFilter }),
+    });
+  };
+
+  useEffect(() => {
+    if (enrollment_status) {
+      tableFilter
+        .getColumn("enrollment_status")
+        .setFilterValue(enrollment_status);
+    }
+
+    if (grade_level) {
+      tableFilter.getColumn("grade_level").setFilterValue(grade_level);
+    }
+  }, [enrollment_status, grade_level]);
 
   return (
     <div className="flex flex-1 items-center space-x-2">
       <Input
         placeholder="First Name..."
         className="h-8 w-[150px] lg:w-[250px]"
-        value={table.getColumn("first_name").getFilterValue() ?? ""}
+        value={tableFilter.getColumn("first_name").getFilterValue() ?? ""}
         onChange={(e) =>
-          table.getColumn("first_name").setFilterValue(e.target.value)
+          tableFilter.getColumn("first_name").setFilterValue(e.target.value)
         }
       />
       <Input
         placeholder="Surname..."
         className="h-8 w-[150px] lg:w-[250px]"
-        value={table.getColumn("surname").getFilterValue() ?? ""}
+        value={tableFilter.getColumn("surname").getFilterValue() ?? ""}
         onChange={(e) =>
-          table.getColumn("surname").setFilterValue(e.target.value)
+          tableFilter.getColumn("surname").setFilterValue(e.target.value)
         }
       />
       <DataTableFilter
-        column={table.getColumn("enrollmentStatus")}
+        column={tableFilter.getColumn("enrollment_status")}
         title="Enrollment Status"
         options={enrollmentStatuses}
+        navigateOnChangeFilter={navigateOnChangeFilter}
       />
       <DataTableFilter
-        column={table.getColumn("gradeLevel")}
+        column={tableFilter.getColumn("grade_level")}
         title="Grade Level"
         options={gradeLevels}
+        navigateOnChangeFilter={navigateOnChangeFilter}
       />
       {isFiltered && (
         <Button
           variant="ghost"
-          onClick={() => table.resetColumnFilters()}
+          onClick={() => {
+            tableFilter.resetColumnFilters();
+            navigate({
+              to: "/admin/students",
+              search: () => ({ page: 1 }),
+            });
+          }}
           className="h-8 px-2 lg:px-3"
         >
           Reset
