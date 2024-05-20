@@ -13,6 +13,9 @@
       "style": {
         "noNonNullAssertion": "warn",
         "useImportType": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
       }
     }
   },
