@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 import type { Student } from "@/services/types";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { enrollmentStatusIcon } from "../-data/data";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
@@ -94,10 +95,11 @@ export function StudentsDataTable({
                     <TableCell>{student.user?.firstName ?? "--"}</TableCell>
                     <TableCell>{student.user?.surname ?? "--"}</TableCell>
                     <TableCell>{student.user?.code ?? "--"}</TableCell>
-                    <TableCell className="text-center">
-                      <Badge variant="secondary">
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        {enrollmentStatusIcon[student.enrollmentStatus]}
                         {student.enrollmentStatus}
-                      </Badge>
+                      </div>
                     </TableCell>
                     <TableCell>
                       {format(new Date(student.createdAt), "cccccc, PPp")}
