@@ -9,12 +9,11 @@ interface FetchStudentsConfig {
 }
 
 function useFetchStudents<T>({ query }: FetchStudentsConfig) {
-  const abortController = new AbortController();
+  const queryString = qs.stringify(query, { arrayFormat: "comma" });
 
-  const queryString = qs.stringify(query);
   return useSWR<T, HttpServiceError>(
     `/student?${queryString}`,
-    (url: string) => apiService.get(url, undefined, abortController.signal),
+    (url: string) => apiService.get(url),
     {
       onErrorRetry: (error, _key, _config, revalidate, { retryCount }) => {
         const { status } = error;
