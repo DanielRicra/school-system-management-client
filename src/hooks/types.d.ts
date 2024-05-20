@@ -7,6 +7,7 @@ export interface ColumnFilter {
 }
 
 export type Column = {
+  columnName: string;
   getFilterValue: () => ColumnFilterValue | undefined;
   setFilterValue: (filterValue?: ColumnFilterValue) => void;
 };

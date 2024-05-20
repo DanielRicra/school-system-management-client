@@ -1,30 +1,33 @@
-import type { Column, ColumnFilterValue, ColumnFiltersState } from "../types";
+import { useState } from "react";
+import type {
+  Column,
+  ColumnFilterValue,
+  ColumnFiltersState,
+} from "@/hooks/types";
 
-interface UseFilterTableProps {
-  state: {
+export type TypeFilterTable<TData> = {
+  getColumn: (id: keyof TData) => Column;
+  getState: () => {
     columnFilters: ColumnFiltersState;
   };
-  onColumnFiltersChange: React.Dispatch<
-    React.SetStateAction<ColumnFiltersState>
-  >;
-}
+  resetColumnFilters: () => void;
+};
 
-export function useFilterTable<TData>({
-  state: { columnFilters },
-  onColumnFiltersChange,
-}: UseFilterTableProps) {
+export function useFilterTable<TData>(): TypeFilterTable<TData> {
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   function getColumn(id: keyof TData): Column {
     const setFilterValue = (filterValue?: ColumnFilterValue) => {
       const existingColumnFilter = columnFilters.find((cf) => cf.id === id);
 
       if (filterValue) {
         if (!existingColumnFilter) {
-          onColumnFiltersChange((prev) => [
+          setColumnFilters((prev) => [
             ...prev,
             { id: id as string, value: filterValue },
           ]);
         } else {
-          onColumnFiltersChange((prev) =>
+          setColumnFilters((prev) =>
             prev.map((cf) =>
               cf.id === id ? { id: id as string, value: filterValue } : cf
             )
@@ -33,7 +36,7 @@ export function useFilterTable<TData>({
       }
 
       if (!filterValue && existingColumnFilter) {
-        onColumnFiltersChange((prev) => prev.filter((cf) => cf.id !== id));
+        setColumnFilters((prev) => prev.filter((cf) => cf.id !== id));
       }
     };
 
@@ -42,6 +45,7 @@ export function useFilterTable<TData>({
     };
 
     return {
+      columnName: id as string,
       getFilterValue,
       setFilterValue,
     };
@@ -54,7 +58,7 @@ export function useFilterTable<TData>({
   }
 
   function resetColumnFilters() {
-    onColumnFiltersChange([]);
+    setColumnFilters([]);
   }
 
   return { getColumn, getState, resetColumnFilters };

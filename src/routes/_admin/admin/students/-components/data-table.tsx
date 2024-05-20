@@ -2,7 +2,6 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
 import { format } from "date-fns";
 
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
