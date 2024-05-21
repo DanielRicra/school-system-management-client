@@ -2,7 +2,6 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { getRouteApi } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 import { enrollmentStatuses, gradeLevels } from "../-data/data";
 import { DataTableFilter } from "@/components/ui/data-table-filter";
@@ -10,6 +9,7 @@ import { useFilterTable } from "@/hooks/table";
 import type { ColumnFilterValue } from "@/hooks/types";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { FilterSearchInput } from "@/components/ui/filter-search-input";
 
 export type StudentsColumnsIDs = {
   first_name: string;
@@ -26,7 +26,8 @@ export function DataTableToolbar() {
 
   const isFiltered = tableFilter.getState().columnFilters.length > 0;
 
-  const { enrollment_status, grade_level } = routeApi.useSearch();
+  const { enrollment_status, grade_level, first_name, surname } =
+    routeApi.useSearch();
 
   const navigateOnChangeFilter = (
     columnName: string,
@@ -48,25 +49,43 @@ export function DataTableToolbar() {
     if (grade_level) {
       tableFilter.getColumn("grade_level").setFilterValue(grade_level);
     }
+    if (first_name) {
+      tableFilter.getColumn("first_name").setFilterValue(first_name);
+    }
+    if (surname) {
+      tableFilter.getColumn("surname").setFilterValue(surname);
+    }
   }, [enrollment_status, grade_level]);
+
+  const handleSubmit =
+    (column: "first_name" | "surname") =>
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const value = tableFilter.getColumn(column).getFilterValue();
+
+      if (value) {
+        navigate({
+          to: "/admin/students",
+          search: (search) => ({
+            ...search,
+            page: 1,
+            [column]: value as string,
+          }),
+        });
+      }
+    };
 
   return (
     <div className="flex flex-1 items-center space-x-2">
-      <Input
-        placeholder="First Name..."
-        className="h-8 w-[150px] lg:w-[250px]"
-        value={tableFilter.getColumn("first_name").getFilterValue() ?? ""}
-        onChange={(e) =>
-          tableFilter.getColumn("first_name").setFilterValue(e.target.value)
-        }
+      <FilterSearchInput
+        handleSubmit={handleSubmit("first_name")}
+        column={tableFilter.getColumn("first_name")}
+        placeHolder="First name..."
       />
-      <Input
-        placeholder="Surname..."
-        className="h-8 w-[150px] lg:w-[250px]"
-        value={tableFilter.getColumn("surname").getFilterValue() ?? ""}
-        onChange={(e) =>
-          tableFilter.getColumn("surname").setFilterValue(e.target.value)
-        }
+      <FilterSearchInput
+        handleSubmit={handleSubmit("surname")}
+        column={tableFilter.getColumn("surname")}
+        placeHolder="Surname..."
       />
       <DataTableFilter
         column={tableFilter.getColumn("enrollment_status")}
