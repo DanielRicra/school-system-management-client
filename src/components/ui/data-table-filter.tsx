@@ -28,10 +28,7 @@ interface DataTableFilterProps {
     value: string;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
-  navigateOnChangeFilter: (
-    columnName: string,
-    columnFilter?: ColumnFilterValue
-  ) => void;
+  navigateOnChangeFilter: (value?: ColumnFilterValue) => void;
 }
 
 export function DataTableFilter({
@@ -50,7 +47,7 @@ export function DataTableFilter({
     }
     const filterValues = Array.from(selectedValues);
     column.setFilterValue(filterValues.length ? filterValues : undefined);
-    navigateOnChangeFilter(column.columnName, filterValues);
+    navigateOnChangeFilter(filterValues);
   };
 
   return (
@@ -135,7 +132,7 @@ export function DataTableFilter({
                   <CommandItem
                     onSelect={() => {
                       column.setFilterValue(undefined);
-                      navigateOnChangeFilter(column.columnName, undefined);
+                      navigateOnChangeFilter(undefined);
                     }}
                     className="justify-center text-center"
                   >
