@@ -14,14 +14,14 @@ export const Route = createLazyFileRoute("/_admin/admin/students/")({
 });
 
 function AdminStudents() {
-  const { page: activePage = 1, ordering, per_page } = Route.useSearch();
+  const searchQuery = Route.useSearch();
 
   const {
     data: students,
     isLoading,
     error,
   } = useFetchStudents<ListResponse<Student>>({
-    query: { page: activePage, ordering, per_page },
+    query: searchQuery,
   });
 
   return (
@@ -30,7 +30,7 @@ function AdminStudents() {
         <div className="mb-3 flex flex-col items-start">
           <TypographyH2>
             Students -{" "}
-            <span className="font-bold">({students?.info.count ?? 0})</span>
+            <span className="font-bold">({students?.info?.count ?? 0})</span>
           </TypographyH2>
           <p className="text-muted-foreground mt-2">Manage the students.</p>
         </div>
@@ -45,9 +45,9 @@ function AdminStudents() {
         {!isLoading && students ? (
           <StudentsDataTable
             data={students.results}
-            activePage={activePage}
-            lastPage={students.info.lastPage}
-            perPage={per_page}
+            activePage={searchQuery.page ?? 1}
+            lastPage={students.info?.lastPage ?? 1}
+            perPage={searchQuery.per_page}
           />
         ) : null}
 
