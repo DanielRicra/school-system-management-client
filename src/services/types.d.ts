@@ -29,7 +29,7 @@ export type Student = {
 };
 
 export type ListResponse<E> = {
-  info: {
+  info?: {
     count: number;
     next: string | null;
     previous: string | null;

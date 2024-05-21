@@ -6,6 +6,8 @@ export const studentSearchSchema = v.object({
   per_page: v.fallback(v.optional(v.number([v.minValue(10)])), 10),
   enrollment_status: v.fallback(v.optional(v.array(v.string())), []),
   grade_level: v.fallback(v.optional(v.array(v.string())), []),
+  first_name: v.fallback(v.optional(v.string()), ""),
+  surname: v.fallback(v.optional(v.string()), ""),
 });
 
 export type StudentSearchSchema = v.Output<typeof studentSearchSchema>;

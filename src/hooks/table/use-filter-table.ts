@@ -20,7 +20,7 @@ export function useFilterTable<TData>(): TypeFilterTable<TData> {
     const setFilterValue = (filterValue?: ColumnFilterValue) => {
       const existingColumnFilter = columnFilters.find((cf) => cf.id === id);
 
-      if (filterValue) {
+      if (filterValue !== undefined) {
         if (!existingColumnFilter) {
           setColumnFilters((prev) => [
             ...prev,
@@ -35,7 +35,7 @@ export function useFilterTable<TData>(): TypeFilterTable<TData> {
         }
       }
 
-      if (!filterValue && existingColumnFilter) {
+      if (filterValue === undefined && existingColumnFilter) {
         setColumnFilters((prev) => prev.filter((cf) => cf.id !== id));
       }
     };
