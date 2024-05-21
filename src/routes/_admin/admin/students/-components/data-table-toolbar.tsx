@@ -29,15 +29,17 @@ export function DataTableToolbar() {
   const { enrollment_status, grade_level, first_name, surname } =
     routeApi.useSearch();
 
-  const navigateOnChangeFilter = (
-    columnName: string,
-    columnFilter?: ColumnFilterValue
-  ) => {
-    navigate({
-      to: "/admin/students",
-      search: (search) => ({ ...search, page: 1, [columnName]: columnFilter }),
-    });
-  };
+  const navigateOnChangeFilter =
+    (column: keyof StudentsColumnsIDs) => (value?: ColumnFilterValue) => {
+      navigate({
+        to: "/admin/students",
+        search: (search) => ({
+          ...search,
+          page: 1,
+          [column]: value,
+        }),
+      });
+    };
 
   useEffect(() => {
     if (enrollment_status) {
@@ -57,33 +59,15 @@ export function DataTableToolbar() {
     }
   }, [enrollment_status, grade_level]);
 
-  const handleSubmit =
-    (column: "first_name" | "surname") =>
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const value = tableFilter.getColumn(column).getFilterValue();
-
-      if (value) {
-        navigate({
-          to: "/admin/students",
-          search: (search) => ({
-            ...search,
-            page: 1,
-            [column]: value as string,
-          }),
-        });
-      }
-    };
-
   return (
     <div className="flex flex-1 items-center space-x-2">
       <FilterSearchInput
-        handleSubmit={handleSubmit("first_name")}
+        navigateOnChangeFilter={navigateOnChangeFilter("first_name")}
         column={tableFilter.getColumn("first_name")}
         placeHolder="First name..."
       />
       <FilterSearchInput
-        handleSubmit={handleSubmit("surname")}
+        navigateOnChangeFilter={navigateOnChangeFilter("surname")}
         column={tableFilter.getColumn("surname")}
         placeHolder="Surname..."
       />
@@ -91,13 +75,13 @@ export function DataTableToolbar() {
         column={tableFilter.getColumn("enrollment_status")}
         title="Enrollment Status"
         options={enrollmentStatuses}
-        navigateOnChangeFilter={navigateOnChangeFilter}
+        navigateOnChangeFilter={navigateOnChangeFilter("enrollment_status")}
       />
       <DataTableFilter
         column={tableFilter.getColumn("grade_level")}
         title="Grade Level"
         options={gradeLevels}
-        navigateOnChangeFilter={navigateOnChangeFilter}
+        navigateOnChangeFilter={navigateOnChangeFilter("grade_level")}
       />
       {isFiltered && (
         <Button
