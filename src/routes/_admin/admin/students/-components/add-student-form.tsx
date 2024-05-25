@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { CaretSortIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
+
 import {
   Select,
   SelectContent,
@@ -19,11 +22,30 @@ import {
 } from "@/components/ui/select";
 
 import { AddStudentSchema, type AddStudentData } from "@/schemas/add-student";
+import { useFetchUsersWithoutStudent } from "@/hooks/http-requests/use-fetch-users";
+import type { UsersWithoutStudent } from "@/services/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert } from "@/components/ui/alert";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { SelectUserCombobox } from "./select-user-popover";
 
 export function AddStudentForm() {
   const form = useForm<AddStudentData>({
     resolver: valibotResolver(AddStudentSchema),
+    defaultValues: {
+      classroomId: undefined,
+    },
   });
+
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useFetchUsersWithoutStudent<UsersWithoutStudent[]>();
 
   function onSubmit(values: AddStudentData) {
     console.log(values);
@@ -56,31 +78,51 @@ export function AddStudentForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="userId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>User Id</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value ?? ""}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a User" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="1e5e3ef7-2ee3-4f7b-ab5c-1c62d310a3b1">
-                    Gandalf The Grey
-                  </SelectItem>
-                  <SelectItem value="1e5e3ef7-2ee3-4f7b-ab5c-1c62d310a3b2">
-                    Legolas The Elf
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        {isLoading ? (
+          <SelectFormSkeleton message="Loading users..." />
+        ) : users ? (
+          <FormField
+            control={form.control}
+            name="userId"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>User</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className="w-full justify-between"
+                      >
+                        {field.value
+                          ? users.find((user) => user.id === field.value)
+                              ?.fullName
+                          : "Select a User"}
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="min-w-full p-0">
+                    <SelectUserCombobox
+                      users={users}
+                      onSelect={(value: string) => field.onChange(value)}
+                      value={field.value}
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormDescription className="px-1">
+                  This user will belong to the student.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : null}
+        {!users && !isLoading && error && (
+          <AlertFormItem message="Couldn't fetch users. Try again later." />
+        )}
 
         <FormField
           control={form.control}
@@ -115,6 +157,7 @@ export function AddStudentForm() {
               <Select
                 onValueChange={field.onChange}
                 value={field.value?.toString() ?? ""}
+                defaultValue={field.value?.toString() ?? ""}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -147,5 +190,22 @@ export function AddStudentForm() {
         </div>
       </form>
     </Form>
+  );
+}
+
+function SelectFormSkeleton({ message }: { message: string }) {
+  return (
+    <div className="space-y-2">
+      <p className="text-sm text-muted-foreground">{message}</p>
+      <Skeleton className="h-9 w-full rounded-md bg-secondary" />
+    </div>
+  );
+}
+
+function AlertFormItem({ message }: { message: string }) {
+  return (
+    <Alert variant="destructive">
+      <div>{message}</div>
+    </Alert>
   );
 }
