@@ -15,7 +15,7 @@ export const AddStudentSchema = object({
     ["1st", "2nd", "3rd", "4th", "5th"],
     "Please select a grade level."
   ),
-  userId: string([
+  userId: string("Please select a user", [
     minLength(1, "Please select a user"),
     uuid("User ID must be a valid UUID"),
   ]),
