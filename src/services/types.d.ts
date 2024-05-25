@@ -39,3 +39,5 @@ export type ListResponse<E> = {
   };
   results: E[];
 };
+
+export type UsersWithoutStudent = Pick<User, "id"> & { fullName: string };
