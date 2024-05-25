@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
 
-import { Button } from "./button";
+import { Button, buttonVariants } from "./button";
 import { Input } from "./input";
 import type { Column } from "@/hooks/types";
 import { cn } from "@/lib/utils";
@@ -43,21 +43,20 @@ export function FilterSearchInput({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon"
+                {/* biome-ignore lint/a11y/useKeyWithClickEvents: not for now */}
+                <div
                   className={cn(
-                    " rounded-full hover:bg-secondary/85",
+                    buttonVariants({ variant: "ghost", size: "icon" }),
+                    "rounded-full hover:bg-secondary/85",
                     value?.length ? "flex" : "hidden"
                   )}
-                  type="button"
                   onClick={() => {
                     column.setFilterValue(undefined);
                     navigateOnChangeFilter(undefined);
                   }}
                 >
                   <Cross2Icon className="h-4 w-4" />
-                </Button>
+                </div>
               </TooltipTrigger>
               <TooltipContent className="bg-secondary text-secondary-foreground">
                 <TypographySmall>Clear Filter</TypographySmall>
