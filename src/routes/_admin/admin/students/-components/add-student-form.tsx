@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { toast } from "sonner";
+import { mutate } from "swr";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
@@ -39,6 +41,8 @@ import { SelectUserCombobox } from "./select-user-popover";
 import { useFetchClassrooms } from "@/hooks/http-requests";
 import { SelectClassroom } from "./select-classroom";
 import { useState } from "react";
+import apiService, { HttpServiceError } from "@/services/api";
+import { useStudentsSheet } from "@/hooks/use-new-student";
 
 export function AddStudentForm() {
   const [classroomSearch, setClassroomSearch] = useState({
@@ -51,6 +55,7 @@ export function AddStudentForm() {
       classroomId: undefined,
     },
   });
+  const onClose = useStudentsSheet((state) => state.onClose);
 
   const {
     data: users,
@@ -80,8 +85,23 @@ export function AddStudentForm() {
     });
   };
 
-  function onSubmit(values: AddStudentData) {
-    console.log(values);
+  async function onSubmit(values: AddStudentData) {
+    try {
+      await apiService.post("/students", JSON.stringify(values));
+      mutate(
+        (key) => typeof key === "string" && key.startsWith("/students"),
+        undefined,
+        { revalidate: true }
+      );
+      toast.success("Student added successfully");
+      onClose();
+    } catch (error: unknown) {
+      if (error instanceof HttpServiceError) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong, try again later.");
+      }
+    }
   }
 
   return (
@@ -226,10 +246,13 @@ export function AddStudentForm() {
             onClick={() => {
               form.reset({});
             }}
+            disabled={form.formState.isSubmitting}
           >
             Reset
           </Button>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            Submit
+          </Button>
         </div>
       </form>
     </Form>
