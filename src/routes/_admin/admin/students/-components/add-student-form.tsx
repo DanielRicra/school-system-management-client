@@ -23,7 +23,11 @@ import {
 
 import { AddStudentSchema, type AddStudentData } from "@/schemas/add-student";
 import { useFetchUsersWithoutStudent } from "@/hooks/http-requests/use-fetch-users";
-import type { UsersWithoutStudent } from "@/services/types";
+import type {
+  Classroom,
+  ListResponse,
+  UsersWithoutStudent,
+} from "@/services/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert } from "@/components/ui/alert";
 import {
@@ -32,8 +36,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { SelectUserCombobox } from "./select-user-popover";
+import { useFetchClassrooms } from "@/hooks/http-requests";
+import { SelectClassroom } from "./select-classroom";
+import { useState } from "react";
 
 export function AddStudentForm() {
+  const [classroomSearch, setClassroomSearch] = useState({
+    year: "",
+    section: "",
+  });
   const form = useForm<AddStudentData>({
     resolver: valibotResolver(AddStudentSchema),
     defaultValues: {
@@ -43,9 +54,31 @@ export function AddStudentForm() {
 
   const {
     data: users,
-    error,
-    isLoading,
+    error: errorUsers,
+    isLoading: isLoadingUsers,
   } = useFetchUsersWithoutStudent<UsersWithoutStudent[]>();
+
+  const {
+    data: classrooms,
+    isLoading: isLoadingClassrooms,
+    error: errorClassrooms,
+  } = useFetchClassrooms<ListResponse<Classroom>>({
+    shouldFetch: !!form.watch("gradeLevel"),
+    query: {
+      grade_level: form.watch("gradeLevel"),
+      ordering: "-year",
+      ...classroomSearch,
+    },
+  });
+
+  const onSearchClassroom = (search: string) => {
+    const [year, section] = search.split(",");
+
+    setClassroomSearch({
+      year,
+      section,
+    });
+  };
 
   function onSubmit(values: AddStudentData) {
     console.log(values);
@@ -60,7 +93,13 @@ export function AddStudentForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Grade Level</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value ?? ""}>
+              <Select
+                onValueChange={(val) => {
+                  field.onChange(val);
+                  form.resetField("classroomId");
+                }}
+                value={field.value ?? ""}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a grade level" />
@@ -79,7 +118,7 @@ export function AddStudentForm() {
           )}
         />
 
-        {isLoading ? (
+        {isLoadingUsers ? (
           <SelectFormSkeleton message="Loading users..." />
         ) : users ? (
           <FormField
@@ -120,7 +159,7 @@ export function AddStudentForm() {
             )}
           />
         ) : null}
-        {!users && !isLoading && error && (
+        {!users && !isLoadingUsers && errorUsers && (
           <AlertFormItem message="Couldn't fetch users. Try again later." />
         )}
 
@@ -148,33 +187,37 @@ export function AddStudentForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="classroomId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Classroom Id</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                value={field.value?.toString() ?? ""}
-                defaultValue={field.value?.toString() ?? ""}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a Classroom" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="1">ADZD</SelectItem>
-                  <SelectItem value="2">ABCD</SelectItem>
-                  <SelectItem value="3">LKJD</SelectItem>
-                  <SelectItem value="4">PLEO</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {isLoadingClassrooms ? (
+          <SelectFormSkeleton message="Loading classrooms..." />
+        ) : classrooms ? (
+          <FormField
+            control={form.control}
+            name="classroomId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Classroom</FormLabel>
+                <SelectClassroom
+                  onChange={field.onChange}
+                  value={field.value}
+                  classrooms={classrooms.results}
+                  onSearch={onSearchClassroom}
+                  defaultSearch={`${classroomSearch.year ?? ""}${
+                    classroomSearch.section
+                      ? `, ${classroomSearch.section}`
+                      : ""
+                  }`}
+                />
+                <FormDescription>
+                  You can search for a classroom by year and section.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : null}
+        {!classrooms && !isLoadingClassrooms && errorClassrooms && (
+          <AlertFormItem message="Couldn't fetch classrooms. Try again later." />
+        )}
 
         <div className="flex justify-between w-full">
           <Button
