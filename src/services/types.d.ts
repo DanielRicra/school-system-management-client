@@ -27,6 +27,15 @@ export type Student = {
   updatedAt: string;
   user?: User;
 };
+export type Classroom ={
+  id: number,
+  gradeLevel: GradeLevel,
+  year: string,
+  section: string,
+  roomId: number | null,
+  createdAt: string,
+  updatedAt: string
+}
 
 export type ListResponse<E> = {
   info?: {
