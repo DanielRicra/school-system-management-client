@@ -63,3 +63,13 @@
     @apply min-h-dvh;
   }
 }
+
+@layer components {
+  .input-number-icon-none {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
