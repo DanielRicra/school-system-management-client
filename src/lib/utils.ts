@@ -33,3 +33,19 @@ export function createPaginationLinks(
 
   return [1, null, ...halfLinks, null, total];
 }
+
+export function getCapacityLabel(min?: number, max?: number) {
+  if (min && max) {
+    return `${min} - ${max}`;
+  }
+
+  if (min) {
+    return `${min} +`;
+  }
+
+  if (max) {
+    return `0 - ${max}`;
+  }
+
+  return "Filter by capacity";
+}
