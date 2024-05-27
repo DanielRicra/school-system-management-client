@@ -1,3 +1,8 @@
+type Timestamps = {
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type User = {
   id: string;
   code: string;
@@ -6,9 +11,7 @@ export type User = {
   role: "admin" | "student" | "teacher";
   gender: string | null;
   deletedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
+} & Timestamps;
 
 export type GradeLevel = "1st" | "2nd" | "3rd" | "4th" | "5th";
 export type EnrollmentStatus =
@@ -23,19 +26,21 @@ export type Student = {
   classroomId: number | null;
   userId: string;
   enrollmentStatus: EnrollmentStatus;
-  createdAt: string;
-  updatedAt: string;
   user?: User;
-};
-export type Classroom ={
-  id: number,
-  gradeLevel: GradeLevel,
-  year: string,
-  section: string,
-  roomId: number | null,
-  createdAt: string,
-  updatedAt: string
-}
+} & Timestamps;
+export type Classroom = {
+  id: number;
+  gradeLevel: GradeLevel;
+  year: string;
+  section: string;
+  roomId: number | null;
+} & Timestamps;
+
+export type Room = {
+  id: number;
+  roomNumber: string;
+  capacity: number | null;
+} & Timestamps;
 
 export type ListResponse<E> = {
   info?: {
