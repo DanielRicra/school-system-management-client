@@ -25,7 +25,10 @@ export function CapacityFilter({
 }: CapacityFilterProps) {
   const minValue = capacityGteColumn.getFilterValue() as number | undefined;
   const maxValue = capacityLteColumn.getFilterValue() as number | undefined;
-  // TODO: add validation for the capacities
+
+  const areValuesValid =
+    (maxValue ?? Number.POSITIVE_INFINITY) > (minValue ?? 0);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -38,8 +41,8 @@ export function CapacityFilter({
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Capacity</h4>
           </div>
-          <div className="flex gap-3">
-            <div className="items-center gap-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="">
               <Label htmlFor="capacityGte">Min Capacity</Label>
               <Input
                 type="number"
@@ -50,6 +53,7 @@ export function CapacityFilter({
                 }}
                 placeholder="Min capacity"
                 min={1}
+                max={(maxValue ?? Number.POSITIVE_INFINITY) - 1}
                 className="input-number-icon-none"
               />
             </div>
@@ -63,10 +67,17 @@ export function CapacityFilter({
                   capacityLteColumn.setFilterValue(+e.target.value);
                 }}
                 placeholder="Max capacity"
-                min={1}
+                min={1 + (minValue ?? 0)}
                 className="input-number-icon-none"
               />
             </div>
+            {!areValuesValid ? (
+              <div className="col-span-2">
+                <span className="text-red-500 text-sm">
+                  Min capacity cannot be greater than max capacity
+                </span>
+              </div>
+            ) : null}
           </div>
           <Separator className="my-1" />
           <div className="flex justify-between">
@@ -88,6 +99,7 @@ export function CapacityFilter({
                   capacityLteColumn.getFilterValue() as number
                 )
               }
+              disabled={!areValuesValid}
             >
               Apply
             </Button>
