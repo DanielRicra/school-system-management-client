@@ -1,3 +1,4 @@
+import { DeleteRoomDialog } from "./delete-room-dialog";
 import { EditRoomSheet } from "./edit-room-sheet";
 import { NewRoomSheet } from "./new-room-sheet";
 
@@ -6,6 +7,7 @@ export function RoomsSheetProvider() {
     <>
       <NewRoomSheet />
       <EditRoomSheet />
+      <DeleteRoomDialog />
     </>
   );
 }
