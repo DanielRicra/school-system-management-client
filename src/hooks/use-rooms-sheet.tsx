@@ -1,7 +1,7 @@
 import type { Room } from "@/services/types";
 import { create } from "zustand";
 
-type RoomSheetType = "create" | "edit";
+type RoomSheetType = "create" | "edit" | "delete";
 
 interface RoomSheetState {
   isOpen: boolean;
