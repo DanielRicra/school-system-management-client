@@ -1,7 +1,6 @@
-import { ExclamationTriangleIcon, PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +12,7 @@ import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
 import { RoomsDataTable } from "./-components/data-table";
 import { RoomsSheetProvider } from "./-components/rooms-sheet-provider";
 import { useFetchRooms } from "@/hooks/http-requests";
+import { MainErrorAlert } from "@/components/main-error-alert";
 
 export const Route = createLazyFileRoute("/_admin/admin/rooms/")({
   component: AdminRooms,
@@ -69,14 +69,9 @@ function AdminRooms() {
         ) : null}
 
         {!rooms && !isLoading && error ? (
-          <Alert
-            variant="destructive"
-            className="dark:text-red-500 dark:border-red-500 max-w-[400px]"
-          >
-            <ExclamationTriangleIcon className="h-4 w-4 dark:text-red-500" />
-            <AlertTitle className="font-bold">Error</AlertTitle>
-            <AlertDescription>{/*error.message*/}Message</AlertDescription>
-          </Alert>
+          <div className="w-full flex justify-center">
+            <MainErrorAlert errorMessage={error.message} />
+          </div>
         ) : null}
       </main>
 
