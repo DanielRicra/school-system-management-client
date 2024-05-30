@@ -22,7 +22,7 @@ export function AddRoomForm() {
   const form = useForm<AddRoomInput>({
     resolver: valibotResolver(AddRoomSchema),
     defaultValues: {
-      capacity: undefined,
+      capacity: "",
       roomNumber: "",
     },
   });
