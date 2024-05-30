@@ -8,6 +8,7 @@ import {
   type Input,
   number,
   minValue,
+  omit,
 } from "valibot";
 
 export const AddRoomSchema = object({
@@ -34,3 +35,7 @@ export const AddRoomSchema = object({
 
 export type AddRoomInput = Input<typeof AddRoomSchema>;
 export type AddRoomOutput = Output<typeof AddRoomSchema>;
+
+export const EditRoomSchema = omit(AddRoomSchema, ["roomNumber"]);
+export type EditRoomInput = Input<typeof EditRoomSchema>;
+export type EditRoomOutput = Output<typeof EditRoomSchema>;

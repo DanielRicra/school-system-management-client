@@ -25,6 +25,7 @@ import { DataTablePagination } from "@/components/ui/data-table-pagination";
 
 import type { Room } from "@/services/types";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
 
 interface RoomsDataTableProps {
   data: Room[];
@@ -47,6 +48,8 @@ export function RoomsDataTable({
   lastPage,
   perPage,
 }: RoomsDataTableProps) {
+  const onOpen = useRoomsSheet((state) => state.onOpen);
+
   return (
     <>
       <DataTableToolbar />
@@ -94,7 +97,11 @@ export function RoomsDataTable({
                             Copy Room ID
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>Edit Room</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onOpen("edit", room)}
+                          >
+                            Edit Room
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Delete Room</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
