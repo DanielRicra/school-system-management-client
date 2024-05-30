@@ -102,7 +102,11 @@ export function RoomsDataTable({
                           >
                             Edit Room
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete Room</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onOpen("delete", room)}
+                          >
+                            Delete Room
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
