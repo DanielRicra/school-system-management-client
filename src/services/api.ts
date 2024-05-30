@@ -92,6 +92,7 @@ class HttpService {
           data
         );
       }
+      if (res.status === 204) return null;
       return await res.json();
     } catch (error) {
       if (error instanceof HttpServiceError) throw error;
