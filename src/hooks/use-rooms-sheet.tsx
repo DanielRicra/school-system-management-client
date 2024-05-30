@@ -1,3 +1,4 @@
+import type { Room } from "@/services/types";
 import { create } from "zustand";
 
 type RoomSheetType = "create" | "edit";
@@ -5,13 +6,15 @@ type RoomSheetType = "create" | "edit";
 interface RoomSheetState {
   isOpen: boolean;
   type: RoomSheetType | null;
-  onOpen: (type: RoomSheetType) => void;
+  data: Partial<Room>;
+  onOpen: (type: RoomSheetType, data?: Partial<Room>) => void;
   onClose: () => void;
 }
 
 export const useRoomsSheet = create<RoomSheetState>()((set) => ({
   isOpen: false,
   type: null,
-  onOpen: (type) => set(() => ({ isOpen: true, type })),
-  onClose: () => set(() => ({ isOpen: false, type: null })),
+  data: {},
+  onOpen: (type, data = {}) => set(() => ({ isOpen: true, type, data })),
+  onClose: () => set(() => ({ isOpen: false, type: null, data: {} })),
 }));
