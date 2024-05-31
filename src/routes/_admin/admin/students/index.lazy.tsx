@@ -1,16 +1,18 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { ExclamationTriangleIcon, PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "@radix-ui/react-icons";
 
+import { MainErrorAlert } from "@/components/main-error-alert";
 import { TypographyH2 } from "@/components/ui/typography";
-import { StudentsDataTable } from "./-components/data-table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useFetchStudents } from "@/hooks/http-requests";
-import type { ListResponse, Student } from "@/services/types";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { StudentsSheetProvider } from "./-components/students-sheet-provider";
+
+import { useFetchStudents } from "@/hooks/http-requests";
 import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import type { ListResponse, Student } from "@/services/types";
+
+import { StudentsDataTable } from "./-components/data-table";
+import { StudentsSheetProvider } from "./-components/students-sheet-provider";
 
 export const Route = createLazyFileRoute("/_admin/admin/students/")({
   component: AdminStudents,
@@ -67,14 +69,9 @@ function AdminStudents() {
         ) : null}
 
         {!students && !isLoading && error ? (
-          <Alert
-            variant="destructive"
-            className="dark:text-red-500 dark:border-red-500 max-w-[400px]"
-          >
-            <ExclamationTriangleIcon className="h-4 w-4 dark:text-red-500" />
-            <AlertTitle className="font-bold">Error</AlertTitle>
-            <AlertDescription>{error.message}</AlertDescription>
-          </Alert>
+          <div className="w-full flex justify-center">
+            <MainErrorAlert errorMessage={error.message} />
+          </div>
         ) : null}
       </main>
 
