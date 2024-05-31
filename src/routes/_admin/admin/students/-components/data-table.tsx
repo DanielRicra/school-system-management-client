@@ -56,6 +56,8 @@ export function StudentsDataTable({
   lastPage,
   perPage,
 }: StudentsDataTableProps) {
+  const onOpen = useStudentsSheet((state) => state.onOpen);
+
   return (
     <>
       <DataTableToolbar />
@@ -142,7 +144,12 @@ export function StudentsDataTable({
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>Edit Student</DropdownMenuItem>
-                          <DropdownMenuItem>Delete Student</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onOpen("delete", student)}
+                            className="text-destructive focus:bg-destructive/90"
+                          >
+                            Delete Student
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
