@@ -10,7 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { StudentsSheetProvider } from "./-components/students-sheet-provider";
-import { useStudentsSheet } from "@/hooks/use-new-student";
+import { useStudentsSheet } from "@/hooks/use-students-sheet";
 
 export const Route = createLazyFileRoute("/_admin/admin/students/")({
   component: AdminStudents,

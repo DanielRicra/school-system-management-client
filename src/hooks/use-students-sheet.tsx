@@ -1,17 +1,21 @@
 import { create } from "zustand";
 
-type StudentSheetType = "create" | "edit";
+import type { Student } from "@/services/types";
+
+type StudentSheetType = "create" | "edit" | "delete";
 
 interface StudentSheetState {
   isOpen: boolean;
   type: StudentSheetType | null;
-  onOpen: (type: StudentSheetType) => void;
+  data: Partial<Student>;
+  onOpen: (type: StudentSheetType, data?: Partial<Student>) => void;
   onClose: () => void;
 }
 
 export const useStudentsSheet = create<StudentSheetState>()((set) => ({
   isOpen: false,
   type: null,
-  onOpen: (type) => set(() => ({ isOpen: true, type })),
+  data: {},
+  onOpen: (type, data = {}) => set(() => ({ isOpen: true, type, data })),
   onClose: () => set(() => ({ isOpen: false, type: null })),
 }));
