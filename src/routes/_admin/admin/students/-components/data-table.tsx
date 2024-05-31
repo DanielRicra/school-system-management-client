@@ -37,6 +37,7 @@ interface StudentsDataTableProps {
 }
 
 const columns = [
+  { header: "Student ID", ordering: null },
   { header: "Grade Level", ordering: "grade_level" },
   { header: "Classroom ID", ordering: "classroom_id" },
   { header: "User ID", ordering: null },
@@ -76,6 +77,21 @@ export function StudentsDataTable({
               {data.length > 0 ? (
                 data.map((student) => (
                   <TableRow key={student.id} className="*:px-2">
+                    <TableCell>
+                      <Link
+                        to="/admin/students/$student-id"
+                        params={{ "student-id": student.id }}
+                        className={cn(
+                          buttonVariants({ variant: "link" }),
+                          "p-0 text-secondary-foreground"
+                        )}
+                        from="/admin/students"
+                      >
+                        <span className="max-w-[80px] text-nowrap truncate">
+                          {student.userId}
+                        </span>
+                      </Link>
+                    </TableCell>
                     <TableCell>{student.gradeLevel}</TableCell>
                     <TableCell>{student.classroomId}</TableCell>
                     <TableCell>
