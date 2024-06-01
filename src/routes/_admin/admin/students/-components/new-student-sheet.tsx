@@ -5,7 +5,6 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
 } from "@/components/ui/sheet";
 import { AddStudentForm } from "./add-student-form";
 
@@ -21,7 +20,6 @@ export function NewStudentSheet() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Add new student</SheetTitle>
-          <SheetDescription>Add a new student</SheetDescription>
         </SheetHeader>
 
         <AddStudentForm />
