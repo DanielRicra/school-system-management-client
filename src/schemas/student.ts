@@ -8,6 +8,7 @@ import {
   coerce,
   type Output,
   minLength,
+  partial,
 } from "valibot";
 
 export const AddStudentSchema = object({
@@ -28,4 +29,8 @@ export const AddStudentSchema = object({
   ),
 });
 
+export const EditStudentSchema = partial(AddStudentSchema);
+
 export type AddStudentData = Output<typeof AddStudentSchema>;
+
+export type EditStudentData = Output<typeof EditStudentSchema>;
