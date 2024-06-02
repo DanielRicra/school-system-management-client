@@ -143,7 +143,11 @@ export function StudentsDataTable({
                             Copy Student ID
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>Edit Student</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onOpen("edit", student)}
+                          >
+                            Edit Student
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => onOpen("delete", student)}
                             className="text-destructive focus:bg-destructive/90"
