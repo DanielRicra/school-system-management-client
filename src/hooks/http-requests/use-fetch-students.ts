@@ -9,7 +9,7 @@ interface FetchStudentsConfig {
   query: QueryString;
 }
 
-function useFetchStudents<T>({ query }: FetchStudentsConfig) {
+export function useFetchStudents<T>({ query }: FetchStudentsConfig) {
   const queryString = qs.stringify(query, { arrayFormat: "comma" });
 
   return useSWR<T, HttpServiceError>(
