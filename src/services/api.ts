@@ -1,6 +1,6 @@
 import { envs } from "@/config/envs";
 
-type ApiRequestMethod = "put" | "post" | "delete" | "patch" | "get";
+type ApiRequestMethod = "PUT" | "POST" | "DELETE" | "PATCH" | "GET";
 
 class HttpService {
   constructor(public baseUrl: string = envs.API_URL) {}
@@ -14,7 +14,7 @@ class HttpService {
 
   request(
     url: string,
-    method: ApiRequestMethod = "get",
+    method: ApiRequestMethod = "GET",
     data: BodyInit | null = null,
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
@@ -41,7 +41,7 @@ class HttpService {
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
   ) {
-    return this.request(url, "get", null, customHeaders, signal);
+    return this.request(url, "GET", null, customHeaders, signal);
   }
 
   post(
@@ -50,7 +50,7 @@ class HttpService {
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
   ) {
-    return this.request(url, "post", data, customHeaders, signal);
+    return this.request(url, "POST", data, customHeaders, signal);
   }
 
   put(
@@ -59,7 +59,7 @@ class HttpService {
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
   ) {
-    return this.request(url, "put", data, customHeaders, signal);
+    return this.request(url, "PUT", data, customHeaders, signal);
   }
 
   patch(
@@ -68,7 +68,7 @@ class HttpService {
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
   ) {
-    return this.request(url, "patch", data, customHeaders, signal);
+    return this.request(url, "PATCH", data, customHeaders, signal);
   }
 
   delete(
@@ -76,7 +76,7 @@ class HttpService {
     customHeaders: Record<string, string> = {},
     signal?: AbortSignal
   ) {
-    return this.request(url, "delete", null, customHeaders, signal);
+    return this.request(url, "DELETE", null, customHeaders, signal);
   }
 
   private async fetchData(request: Request) {
