@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { AddStudentSchema, type AddStudentData } from "@/schemas/add-student";
+import { AddStudentSchema, type AddStudentData } from "@/schemas/student";
 import { useFetchUsersWithoutStudent } from "@/hooks/http-requests/use-fetch-users";
 import type {
   Classroom,
