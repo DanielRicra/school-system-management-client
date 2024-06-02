@@ -69,7 +69,7 @@ export function SelectClassroom({
             <SelectValue placeholder="Select a Classroom" />
           </SelectTrigger>
         </FormControl>
-        <SelectContent>
+        <SelectContent className="max-h-[250px]">
           {classrooms.length ? (
             classrooms.map((classroom) => (
               <SelectItem key={classroom.id} value={classroom.id.toString()}>
