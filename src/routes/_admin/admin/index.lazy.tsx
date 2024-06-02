@@ -14,7 +14,7 @@ export const Route = createLazyFileRoute("/_admin/admin/")({
 function Dashboard() {
   return (
     <main className="p-6 flex gap-4">
-      <Link to="/admin/students" from="/admin">
+      <Link to="/admin/students" from="/admin" preload="intent">
         <Card className="min-w-[180px]">
           <CardHeader>
             <CardTitle>Students</CardTitle>
