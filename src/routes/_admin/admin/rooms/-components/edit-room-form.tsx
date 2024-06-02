@@ -60,8 +60,6 @@ export function EditRoomForm() {
       toast.success("Room updated successfully");
       onClose();
     } catch (error: unknown) {
-      console.log(error);
-
       if (error instanceof HttpServiceError) {
         toast.error(error.message);
       } else {
