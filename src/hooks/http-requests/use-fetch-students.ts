@@ -3,6 +3,7 @@ import useSWR from "swr";
 
 import apiService, { type HttpServiceError } from "@/services/api";
 import type { QueryString } from "@/types";
+import type { Student } from "@/services/types";
 
 interface FetchStudentsConfig {
   query: QueryString;
@@ -17,4 +18,9 @@ function useFetchStudents<T>({ query }: FetchStudentsConfig) {
   );
 }
 
-export default useFetchStudents;
+export function useFetchStudent<T>(studentId?: Student["id"]) {
+  return useSWR<T, HttpServiceError>(
+    studentId ? `/students/${studentId}` : null,
+    (url: string) => apiService.get(url)
+  );
+}
