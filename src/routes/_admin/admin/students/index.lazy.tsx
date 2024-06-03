@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 import { useFetchStudents } from "@/hooks/http-requests";
 import { useStudentsSheet } from "@/hooks/use-students-sheet";
-import type { ListResponse, Student } from "@/services/types";
+import type { ListResponse, StudentWithUser } from "@/services/types";
 
 import { StudentsDataTable } from "./-components/data-table";
 import { StudentsSheetProvider } from "./-components/students-sheet-provider";
@@ -25,7 +25,7 @@ function AdminStudents() {
     data: students,
     isLoading,
     error,
-  } = useFetchStudents<ListResponse<Student>>({
+  } = useFetchStudents<ListResponse<StudentWithUser>>({
     query: searchQuery,
   });
 

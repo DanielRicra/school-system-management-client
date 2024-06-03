@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import type { Student } from "@/services/types";
+import type { StudentWithUser } from "@/services/types";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { enrollmentStatusIcon } from "../-data/data";
@@ -30,7 +30,7 @@ import { DataTableToolbar } from "./data-table-toolbar";
 import { useStudentsSheet } from "@/hooks/use-students-sheet";
 
 interface StudentsDataTableProps {
-  data: Student[];
+  data: StudentWithUser[];
   activePage: number;
   lastPage: number;
   perPage?: number;
@@ -95,7 +95,7 @@ export function StudentsDataTable({
                       </Link>
                     </TableCell>
                     <TableCell>{student.gradeLevel}</TableCell>
-                    <TableCell>{student.classroomId}</TableCell>
+                    <TableCell>{student.classroomId ?? "-"}</TableCell>
                     <TableCell>
                       <Link
                         to="/admin/users/$user-id"
@@ -111,9 +111,9 @@ export function StudentsDataTable({
                         </span>
                       </Link>
                     </TableCell>
-                    <TableCell>{student.user?.firstName ?? "--"}</TableCell>
-                    <TableCell>{student.user?.surname ?? "--"}</TableCell>
-                    <TableCell>{student.user?.code ?? "--"}</TableCell>
+                    <TableCell>{student.user.firstName}</TableCell>
+                    <TableCell>{student.user.surname}</TableCell>
+                    <TableCell>{student.user.code}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {enrollmentStatusIcon[student.enrollmentStatus]}

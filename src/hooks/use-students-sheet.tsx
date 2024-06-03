@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
-import type { Student } from "@/services/types";
+import type { StudentWithUser } from "@/services/types";
 
 type StudentSheetType = "create" | "edit" | "delete";
 
 interface StudentSheetState {
   isOpen: boolean;
   type: StudentSheetType | null;
-  data: Partial<Student>;
-  onOpen: (type: StudentSheetType, data?: Partial<Student>) => void;
+  data: Partial<StudentWithUser>;
+  onOpen: (type: StudentSheetType, data?: Partial<StudentWithUser>) => void;
   onClose: () => void;
 }
 
