@@ -98,12 +98,13 @@ export function StudentsDataTable({
                     <TableCell>{student.classroomId}</TableCell>
                     <TableCell>
                       <Link
-                        to="/admin/users/$userId"
-                        params={{ userId: student.userId }}
+                        to="/admin/users/$user-id"
+                        params={{ "user-id": student.userId }}
                         className={cn(
                           buttonVariants({ variant: "link" }),
                           "p-0 text-secondary-foreground"
                         )}
+                        from="/admin/students"
                       >
                         <span className="max-w-[80px] text-nowrap truncate">
                           {student.userId}

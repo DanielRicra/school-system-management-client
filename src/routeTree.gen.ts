@@ -17,7 +17,7 @@ import { Route as AdminImport } from './routes/_admin'
 import { Route as AdminAdminUsersIndexImport } from './routes/_admin/admin/users/index'
 import { Route as AdminAdminStudentsIndexImport } from './routes/_admin/admin/students/index'
 import { Route as AdminAdminRoomsIndexImport } from './routes/_admin/admin/rooms/index'
-import { Route as AdminAdminUsersUserIdImport } from './routes/_admin/admin/users/$userId'
+import { Route as AdminAdminUsersUserIdImport } from './routes/_admin/admin/users/$user-id'
 import { Route as AdminAdminStudentsStudentIdImport } from './routes/_admin/admin/students/$student-id'
 import { Route as AdminAdminRoomsRoomIdImport } from './routes/_admin/admin/rooms/$room-id'
 
@@ -65,7 +65,7 @@ const AdminAdminRoomsIndexRoute = AdminAdminRoomsIndexImport.update({
 )
 
 const AdminAdminUsersUserIdRoute = AdminAdminUsersUserIdImport.update({
-  path: '/admin/users/$userId',
+  path: '/admin/users/$user-id',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -104,7 +104,7 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminStudentsStudentIdImport
       parentRoute: typeof AdminImport
     }
-    '/_admin/admin/users/$userId': {
+    '/_admin/admin/users/$user-id': {
       preLoaderRoute: typeof AdminAdminUsersUserIdImport
       parentRoute: typeof AdminImport
     }
