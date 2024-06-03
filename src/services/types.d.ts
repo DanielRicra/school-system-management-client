@@ -1,7 +1,7 @@
-type Timestamps = {
+interface Timestamps {
   createdAt: string;
   updatedAt: string;
-};
+}
 
 export type User = {
   id: string;
@@ -20,14 +20,20 @@ export type EnrollmentStatus =
   | "transferred"
   | "inactive";
 
-export type Student = {
+export interface Student extends Timestamps {
   id: string;
   gradeLevel: GradeLevel;
   classroomId: number | null;
   userId: string;
   enrollmentStatus: EnrollmentStatus;
-  user?: User;
-} & Timestamps;
+}
+
+export type StudentWithUser = Student & { user: User };
+export interface StudentWithRelations extends Student {
+  user: User;
+  classroom?: Classroom | null;
+}
+
 export type Classroom = {
   id: number;
   gradeLevel: GradeLevel;
