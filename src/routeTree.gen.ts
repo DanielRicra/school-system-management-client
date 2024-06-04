@@ -17,9 +17,11 @@ import { Route as AdminImport } from './routes/_admin'
 import { Route as AdminAdminUsersIndexImport } from './routes/_admin/admin/users/index'
 import { Route as AdminAdminStudentsIndexImport } from './routes/_admin/admin/students/index'
 import { Route as AdminAdminRoomsIndexImport } from './routes/_admin/admin/rooms/index'
+import { Route as AdminAdminClassroomsIndexImport } from './routes/_admin/admin/classrooms/index'
 import { Route as AdminAdminUsersUserIdImport } from './routes/_admin/admin/users/$user-id'
 import { Route as AdminAdminStudentsStudentIdImport } from './routes/_admin/admin/students/$student-id'
 import { Route as AdminAdminRoomsRoomIdImport } from './routes/_admin/admin/rooms/$room-id'
+import { Route as AdminAdminClassroomsClassroomIdImport } from './routes/_admin/admin/classrooms/$classroom-id'
 
 // Create Virtual Routes
 
@@ -64,6 +66,11 @@ const AdminAdminRoomsIndexRoute = AdminAdminRoomsIndexImport.update({
   import('./routes/_admin/admin/rooms/index.lazy').then((d) => d.Route),
 )
 
+const AdminAdminClassroomsIndexRoute = AdminAdminClassroomsIndexImport.update({
+  path: '/admin/classrooms/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AdminAdminUsersUserIdRoute = AdminAdminUsersUserIdImport.update({
   path: '/admin/users/$user-id',
   getParentRoute: () => AdminRoute,
@@ -79,6 +86,12 @@ const AdminAdminRoomsRoomIdRoute = AdminAdminRoomsRoomIdImport.update({
   path: '/admin/rooms/$room-id',
   getParentRoute: () => AdminRoute,
 } as any)
+
+const AdminAdminClassroomsClassroomIdRoute =
+  AdminAdminClassroomsClassroomIdImport.update({
+    path: '/admin/classrooms/$classroom-id',
+    getParentRoute: () => AdminRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -96,6 +109,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminIndexLazyImport
       parentRoute: typeof AdminImport
     }
+    '/_admin/admin/classrooms/$classroom-id': {
+      preLoaderRoute: typeof AdminAdminClassroomsClassroomIdImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/admin/rooms/$room-id': {
       preLoaderRoute: typeof AdminAdminRoomsRoomIdImport
       parentRoute: typeof AdminImport
@@ -106,6 +123,10 @@ declare module '@tanstack/react-router' {
     }
     '/_admin/admin/users/$user-id': {
       preLoaderRoute: typeof AdminAdminUsersUserIdImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/classrooms/': {
+      preLoaderRoute: typeof AdminAdminClassroomsIndexImport
       parentRoute: typeof AdminImport
     }
     '/_admin/admin/rooms/': {
@@ -129,9 +150,11 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   AdminRoute.addChildren([
     AdminAdminIndexLazyRoute,
+    AdminAdminClassroomsClassroomIdRoute,
     AdminAdminRoomsRoomIdRoute,
     AdminAdminStudentsStudentIdRoute,
     AdminAdminUsersUserIdRoute,
+    AdminAdminClassroomsIndexRoute,
     AdminAdminRoomsIndexRoute,
     AdminAdminStudentsIndexRoute,
     AdminAdminUsersIndexRoute,
