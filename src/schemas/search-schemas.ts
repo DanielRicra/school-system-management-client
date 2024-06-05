@@ -33,3 +33,14 @@ export const roomSearchSchema = v.intersect([
   }),
 ]);
 export type RoomSearchSchema = v.Output<typeof roomSearchSchema>;
+
+export const classroomSearchSchema = v.intersect([
+  basicSearchSchema,
+  v.object({
+    room_id: v.fallback(v.optional(v.number([v.minValue(1)])), 1),
+    grade_level: v.fallback(v.optional(v.array(v.string())), []),
+    section: v.fallback(v.optional(v.string()), ""),
+    year: v.fallback(v.optional(v.string()), ""),
+  }),
+]);
+export type ClassroomSearchSchema = v.Output<typeof classroomSearchSchema>;
