@@ -23,6 +23,12 @@ export function Sidebar() {
         >
           Rooms
         </Link>
+        <Link
+          to="/admin/classrooms"
+          className="[&.active]:font-semibold hover:bg-secondary p-2 px-4 rounded-md [&.active]:bg-secondary"
+        >
+          Classrooms
+        </Link>
       </ul>
     </nav>
   );

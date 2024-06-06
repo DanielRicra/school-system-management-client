@@ -40,16 +40,20 @@ function Dashboard() {
         </CardContent>
       </Card>
 
-      <Card className="min-w-[180px]">
-        <CardHeader>
-          <CardTitle>Classrooms</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ClassroomsIcon className="w-8 h-8 fill-primary mb-3" />
+      <Link to="/admin/classrooms" from="/admin" preload="intent">
+        <Card className="min-w-[180px]">
+          <CardHeader>
+            <CardTitle>Classrooms</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ClassroomsIcon className="w-8 h-8 fill-primary mb-3" />
 
-          <div className="font-bold text-2xl leading-6 tracking-wide">500</div>
-        </CardContent>
-      </Card>
+            <div className="font-bold text-2xl leading-6 tracking-wide">
+              500
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
 
       <Link to="/admin/rooms" from="/admin" preload="intent">
         <Card className="min-w-[180px]">
