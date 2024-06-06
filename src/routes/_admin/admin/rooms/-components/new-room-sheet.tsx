@@ -1,4 +1,4 @@
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 
 import {
   Sheet,

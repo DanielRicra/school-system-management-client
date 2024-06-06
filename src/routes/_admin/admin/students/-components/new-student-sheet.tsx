@@ -1,4 +1,4 @@
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 
 import {
   Sheet,

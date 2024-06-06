@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyH2 } from "@/components/ui/typography";
 
 import type { ListResponse, Room } from "@/services/types";
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 
 import { RoomsDataTable } from "./-components/data-table";
 import { RoomsSheetProvider } from "./-components/rooms-sheet-provider";

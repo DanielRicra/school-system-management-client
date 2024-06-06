@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 import apiService, { type HttpServiceError } from "@/services/api";
 
 export function DeleteStudentDialog() {

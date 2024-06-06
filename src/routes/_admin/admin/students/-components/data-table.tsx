@@ -27,7 +27,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { enrollmentStatusIcon } from "../-data/data";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 
 interface StudentsDataTableProps {
   data: StudentWithUser[];

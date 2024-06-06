@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 
 import { AddRoomSchema, type AddRoomInput } from "@/schemas/add-room";
 import apiService, { HttpServiceError } from "@/services/api";
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 
 export function AddRoomForm() {
   const form = useForm<AddRoomInput>({

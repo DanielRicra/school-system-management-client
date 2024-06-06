@@ -22,7 +22,7 @@ import {
   type EditRoomOutput,
 } from "@/schemas/add-room";
 import apiService, { HttpServiceError } from "@/services/api";
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 import { useFetchRoom } from "@/hooks/http-requests";
 import type { Room } from "@/services/types";
 import { Skeleton } from "@/components/ui/skeleton";

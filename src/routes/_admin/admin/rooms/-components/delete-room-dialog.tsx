@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 import apiService, { type HttpServiceError } from "@/services/api";
 
 export function DeleteRoomDialog() {

@@ -29,7 +29,7 @@ import { EditStudentSchema, type EditStudentData } from "@/schemas/student";
 import type { Classroom, ListResponse, Student } from "@/services/types";
 import apiService, { type HttpServiceError } from "@/services/api";
 import { useFetchClassrooms, useFetchStudent } from "@/hooks/http-requests";
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 
 import { SelectClassroom } from "./select-classroom";
 

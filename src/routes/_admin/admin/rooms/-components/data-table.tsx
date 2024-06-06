@@ -26,7 +26,7 @@ import { DataTablePagination } from "@/components/ui/data-table-pagination";
 
 import type { Room } from "@/services/types";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { useRoomsSheet } from "@/hooks/use-rooms-sheet";
+import { useRoomsSheet } from "@/hooks/store";
 import { cn } from "@/lib/utils";
 
 interface RoomsDataTableProps {

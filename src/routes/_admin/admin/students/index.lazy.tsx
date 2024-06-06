@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
 import { useFetchStudents } from "@/hooks/http-requests";
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 import type { ListResponse, StudentWithUser } from "@/services/types";
 
 import { StudentsDataTable } from "./-components/data-table";

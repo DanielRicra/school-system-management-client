@@ -42,7 +42,7 @@ import { useFetchClassrooms } from "@/hooks/http-requests";
 import { SelectClassroom } from "./select-classroom";
 import { useState } from "react";
 import apiService, { HttpServiceError } from "@/services/api";
-import { useStudentsSheet } from "@/hooks/use-students-sheet";
+import { useStudentsSheet } from "@/hooks/store";
 
 export function AddStudentForm() {
   const [classroomSearch, setClassroomSearch] = useState({
