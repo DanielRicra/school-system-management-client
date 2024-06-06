@@ -82,7 +82,7 @@ function ClassroomPage() {
           </div>
         ) : null}
 
-        <TypographyH3>Students</TypographyH3>
+        <TypographyH3>Students - {students?.length ?? 0}</TypographyH3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {isLoadingStudents ? (
             <div className="space-y-4 col-span-1">
