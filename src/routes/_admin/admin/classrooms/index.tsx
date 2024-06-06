@@ -1,5 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { parse } from "valibot";
 
-export const Route = createFileRoute('/_admin/admin/classrooms/')({
-  component: () => <div>Hello /_admin/admin/classrooms/!</div>
-})
+import { classroomSearchSchema } from "@/schemas/search-schemas";
+
+export const Route = createFileRoute("/_admin/admin/classrooms/")({
+  validateSearch: (search) => parse(classroomSearchSchema, search),
+});

@@ -69,7 +69,9 @@ const AdminAdminRoomsIndexRoute = AdminAdminRoomsIndexImport.update({
 const AdminAdminClassroomsIndexRoute = AdminAdminClassroomsIndexImport.update({
   path: '/admin/classrooms/',
   getParentRoute: () => AdminRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_admin/admin/classrooms/index.lazy').then((d) => d.Route),
+)
 
 const AdminAdminUsersUserIdRoute = AdminAdminUsersUserIdImport.update({
   path: '/admin/users/$user-id',
