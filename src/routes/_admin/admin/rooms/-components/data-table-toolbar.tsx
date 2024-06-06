@@ -8,7 +8,7 @@ import type { ColumnFilterValue } from "@/hooks/types";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { FilterSearchInput } from "@/components/ui/filter-search-input";
-import { CapacityFilter } from "./capacity-filter";
+import { CapacityFilter } from "../../-components/capacity-filter";
 
 export type StudentsColumnsIDs = {
   room_number: string;
