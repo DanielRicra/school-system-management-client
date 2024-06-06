@@ -27,3 +27,12 @@ export function useFetchClassroom<T>(classroomId?: Classroom["id"]) {
     (url: string) => apiService.get(url)
   );
 }
+
+export function useFetchClassroomStudents<T>(
+  classroomId?: Classroom["id"] | string
+) {
+  return useSWR<T, HttpServiceError>(
+    classroomId ? `/classrooms/${classroomId}/students` : null,
+    (url: string) => apiService.get(url)
+  );
+}
