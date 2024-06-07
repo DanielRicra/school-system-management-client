@@ -28,7 +28,7 @@ import { useFetchUsersWithoutStudent } from "@/hooks/http-requests/use-fetch-use
 import type {
   Classroom,
   ListResponse,
-  UsersWithoutStudent,
+  BasicUser,
 } from "@/services/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert } from "@/components/ui/alert";
@@ -61,7 +61,7 @@ export function AddStudentForm() {
     data: users,
     error: errorUsers,
     isLoading: isLoadingUsers,
-  } = useFetchUsersWithoutStudent<UsersWithoutStudent[]>();
+  } = useFetchUsersWithoutStudent<BasicUser[]>();
 
   const {
     data: classrooms,

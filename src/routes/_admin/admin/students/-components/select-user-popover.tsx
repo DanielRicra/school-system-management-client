@@ -10,12 +10,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import type { UsersWithoutStudent } from "@/services/types";
+import type { BasicUser } from "@/services/types";
 
 interface SelectUserPopoverProps {
   value: string;
   onSelect: (value: string) => void;
-  users: UsersWithoutStudent[];
+  users: BasicUser[];
 }
 
 export function SelectUserCombobox({
