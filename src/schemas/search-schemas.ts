@@ -44,3 +44,13 @@ export const classroomSearchSchema = v.intersect([
   }),
 ]);
 export type ClassroomSearchSchema = v.Output<typeof classroomSearchSchema>;
+
+export const TeacherSearchSchema = v.intersect([
+  basicSearchSchema,
+  v.object({
+    department: v.fallback(v.optional(v.string()), ""),
+    first_name: v.fallback(v.optional(v.string()), ""),
+    surname: v.fallback(v.optional(v.string()), ""),
+  }),
+]);
+export type TeacherSearchSchemaData = v.Output<typeof TeacherSearchSchema>;
