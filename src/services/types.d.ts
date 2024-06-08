@@ -61,3 +61,10 @@ export type ListResponse<E> = {
 };
 
 export type BasicUser = Pick<User, "id"> & { fullName: string };
+
+export interface Teacher extends Timestamps {
+  id: string;
+  department: string | null;
+  userId: string;
+}
+export type TeacherWithUser = Teacher & { user: User };
