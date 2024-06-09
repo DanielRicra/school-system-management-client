@@ -22,11 +22,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { SelectUserCombobox } from "../../-components/select-user-popover";
 
 import { AddTeacherSchema, type AddTeacherData } from "@/schemas/teacher";
 import { useFetchUsersWithoutTeacher } from "@/hooks/http-requests";
 import type { BasicUser } from "@/services/types";
-import { SelectUserCombobox } from "./select-user-popover";
 import apiService, { type HttpServiceError } from "@/services/api";
 import { useTeachersSheet } from "@/hooks/store";
 

@@ -33,7 +33,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { SelectUserCombobox } from "./select-user-popover";
+import { SelectUserCombobox } from "../../-components/select-user-popover";
 import { useFetchClassrooms } from "@/hooks/http-requests";
 import { SelectClassroom } from "./select-classroom";
 import { useState } from "react";

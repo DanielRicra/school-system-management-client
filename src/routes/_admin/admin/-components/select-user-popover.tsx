@@ -26,16 +26,16 @@ export function SelectUserCombobox({
   return (
     <Command>
       <CommandInput placeholder="Search User..." className="h-9 w-full" />
-      <CommandEmpty>No User found.</CommandEmpty>
       <CommandList>
-        <CommandGroup>
+        <CommandEmpty>No User found.</CommandEmpty>
+        <CommandGroup heading="Users">
           {users.map((user) => (
             <CommandItem
-              value={user.id}
+              value={user.fullName}
               key={user.id}
               onSelect={() => onSelect(user.id)}
             >
-              {user.fullName}
+              <span>{user.fullName}</span>
               <CheckIcon
                 className={cn(
                   "ml-auto h-4 w-4",
