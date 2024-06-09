@@ -29,16 +29,20 @@ function Dashboard() {
         </Card>
       </Link>
 
-      <Card className="min-w-[180px]">
-        <CardHeader>
-          <CardTitle>Teachers</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <TeachersIcon className="w-8 h-8 fill-primary mb-3" />
+      <Link to="/admin/teachers" from="/admin" preload="intent">
+        <Card className="min-w-[180px]">
+          <CardHeader>
+            <CardTitle>Teachers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TeachersIcon className="w-8 h-8 fill-primary mb-3" />
 
-          <div className="font-bold text-2xl leading-6 tracking-wide">400</div>
-        </CardContent>
-      </Card>
+            <div className="font-bold text-2xl leading-6 tracking-wide">
+              400
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
 
       <Link to="/admin/classrooms" from="/admin" preload="intent">
         <Card className="min-w-[180px]">
