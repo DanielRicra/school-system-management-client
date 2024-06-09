@@ -14,21 +14,21 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-
-import { AddTeacherSchema, type AddTeacherData } from "@/schemas/teacher";
-import { useFetchUsersWithoutTeacher } from "@/hooks/http-requests";
-import type { BasicUser } from "@/services/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
+import { AddTeacherSchema, type AddTeacherData } from "@/schemas/teacher";
+import { useFetchUsersWithoutTeacher } from "@/hooks/http-requests";
+import type { BasicUser } from "@/services/types";
 import { SelectUserCombobox } from "./select-user-popover";
 import apiService, { type HttpServiceError } from "@/services/api";
 import { useTeachersSheet } from "@/hooks/store";
-import { Input } from "@/components/ui/input";
 
 export function AddTeacherForm() {
   const form = useForm<AddTeacherData>({
