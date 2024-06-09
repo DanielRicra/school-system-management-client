@@ -24,12 +24,8 @@ import {
 } from "@/components/ui/select";
 
 import { AddStudentSchema, type AddStudentData } from "@/schemas/student";
-import { useFetchUsersWithoutStudent } from "@/hooks/http-requests/use-fetch-users";
-import type {
-  Classroom,
-  ListResponse,
-  BasicUser,
-} from "@/services/types";
+import { useFetchUsersWithoutStudent } from "@/hooks/http-requests";
+import type { Classroom, ListResponse, BasicUser } from "@/services/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert } from "@/components/ui/alert";
 import {
