@@ -122,7 +122,7 @@ function ClassroomPage() {
               </Card>
             ))
           ) : (
-            <TypographyMuted>This student has no students.</TypographyMuted>
+            <TypographyMuted>This classroom has no students.</TypographyMuted>
           )}
           {!isLoadingStudents && errorStudents ? (
             <MainErrorAlert errorMessage={errorStudents.message} />
