@@ -54,3 +54,12 @@ export const TeacherSearchSchema = v.intersect([
   }),
 ]);
 export type TeacherSearchSchemaData = v.Output<typeof TeacherSearchSchema>;
+
+export const CourseSearchSchema = v.intersect([
+  basicSearchSchema,
+  v.object({
+    code: v.fallback(v.optional(v.string()), ""),
+    name: v.fallback(v.optional(v.string()), ""),
+  }),
+]);
+export type CourseSearchSchemaData = v.Output<typeof CourseSearchSchema>;
