@@ -24,3 +24,10 @@ export function useFetchTeacher<T>(teacherId?: Teacher["id"]) {
     (url: string) => apiService.get(url)
   );
 }
+
+export function useFetchTeacherCourses<T>(teacherId?: Teacher["id"] | string) {
+  return useSWR<T, HttpServiceError>(
+    teacherId ? `/teachers/${teacherId}/courses` : null,
+    (url: string) => apiService.get(url)
+  );
+}
