@@ -68,3 +68,11 @@ export interface Teacher extends Timestamps {
   userId: string;
 }
 export type TeacherWithUser = Teacher & { user: User };
+
+export interface Course extends Timestamps {
+  id: number;
+  code: string;
+  name: string;
+  classroomId: number | null;
+  teacherId: string | null;
+}
